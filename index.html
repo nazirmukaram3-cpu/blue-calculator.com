@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>
+
+<meta name="google-site-verification" content="CdybynoLJE0XtgaX7AqfdBV-MQ9njpwfaCi8nxn-3Vo" />
+
+<title>Blue Calculator</title>
+
+<style>
+
+body{
+
+margin:0;
+font-family:Segoe UI;
+background:linear-gradient(135deg,#0f2027,#1e3c72,#2a5298);
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+color:white;
+
+}
+
+/* Welcome */
+
+#welcome{
+
+position:fixed;
+width:100%;
+height:100%;
+background:linear-gradient(135deg,#020024,#090979,#00d4ff);
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+
+}
+
+#welcome h1{
+
+font-size:60px;
+letter-spacing:4px;
+margin:0;
+
+}
+
+.loader{
+
+width:300px;
+height:6px;
+background:#111;
+margin-top:20px;
+border-radius:10px;
+overflow:hidden;
+
+}
+
+.bar{
+
+width:0%;
+height:100%;
+background:#00c6ff;
+animation:load 3s forwards;
+
+}
+
+@keyframes load{
+
+to{ width:100%; }
+
+}
+
+.start{
+
+margin-top:30px;
+padding:12px 40px;
+border:none;
+border-radius:30px;
+background:#00c6ff;
+font-size:18px;
+cursor:pointer;
+color:white;
+
+}
+
+.calculator{
+
+display:none;
+background:rgba(255,255,255,.08);
+padding:20px;
+border-radius:20px;
+backdrop-filter:blur(15px);
+box-shadow:0 0 40px black;
+
+}
+
+#display{
+
+width:100%;
+height:70px;
+border:none;
+border-radius:10px;
+background:#020617;
+color:white;
+font-size:30px;
+text-align:right;
+margin-bottom:15px;
+
+}
+
+.buttons{
+
+display:grid;
+grid-template-columns:repeat(5,70px);
+gap:10px;
+
+}
+
+button{
+
+height:60px;
+border:none;
+border-radius:12px;
+background:#0a1f44;
+color:white;
+font-size:17px;
+cursor:pointer;
+
+}
+
+button:hover{
+
+background:#163d7a;
+
+}
+
+.operator{
+
+background:#0077ff;
+
+}
+
+.equal{
+
+background:#00a8ff;
+grid-column:span 2;
+
+}
+
+.clear{
+
+background:#ff4d6d;
+
+}
+
+.memory{
+
+background:#3a86ff;
+
+}
+
+footer{
+
+text-align:center;
+opacity:.7;
+margin-top:10px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<div id="welcome">
+
+<h1>BLUE CALCULATOR</h1>
+
+<p>Professional Scientific Calculator</p>
+
+<div class="loader">
+
+<div class="bar"></div>
+
+</div>
+
+<button class="start" onclick="start()">Enter</button>
+
+</div>
+
+
+
+<div class="calculator" id="calc">
+
+<input id="display" readonly>
+
+<div class="buttons">
+
+<button onclick="press('7')">7</button>
+<button onclick="press('8')">8</button>
+<button onclick="press('9')">9</button>
+<button class="operator" onclick="press('/')">÷</button>
+<button onclick="sqrt()">√</button>
+
+<button onclick="press('4')">4</button>
+<button onclick="press('5')">5</button>
+<button onclick="press('6')">6</button>
+<button class="operator" onclick="press('*')">×</button>
+<button onclick="power()">x²</button>
+
+<button onclick="press('1')">1</button>
+<button onclick="press('2')">2</button>
+<button onclick="press('3')">3</button>
+<button class="operator" onclick="press('-')">−</button>
+<button onclick="sin()">sin</button>
+
+<button onclick="press('0')">0</button>
+<button onclick="press('.')">.</button>
+<button class="clear" onclick="clearDisplay()">C</button>
+<button class="operator" onclick="press('+')">+</button>
+<button onclick="cos()">cos</button>
+
+<button onclick="tan()">tan</button>
+<button onclick="log()">log</button>
+
+<button class="memory" onclick="mplus()">M+</button>
+<button class="memory" onclick="mminus()">M-</button>
+<button class="memory" onclick="mrecall()">MR</button>
+
+<button onclick="history()">H</button>
+
+<button class="equal" onclick="calculate()">=</button>
+
+</div>
+
+<footer>
+
+Blue Calculator © 2026
+
+</footer>
+
+</div>
+
+
+
+<script>
+
+let historyData=[];
+let memory=0;
+
+function start(){
+
+document.getElementById("welcome").style.display="none";
+
+document.getElementById("calc").style.display="block";
+
+}
+
+function press(num){
+
+display.value+=num;
+
+}
+
+function calculate(){
+
+try{
+
+let result=eval(display.value);
+
+historyData.push(display.value+" = "+result);
+
+display.value=result;
+
+}
+
+catch{
+
+display.value="Error";
+
+}
+
+}
+
+function clearDisplay(){
+
+display.value="";
+
+}
+
+function sqrt(){
+
+display.value=Math.sqrt(display.value);
+
+}
+
+function power(){
+
+display.value=Math.pow(display.value,2);
+
+}
+
+function sin(){
+
+display.value=Math.sin(display.value);
+
+}
+
+function cos(){
+
+display.value=Math.cos(display.value);
+
+}
+
+function tan(){
+
+display.value=Math.tan(display.value);
+
+}
+
+function log(){
+
+display.value=Math.log10(display.value);
+
+}
+
+function history(){
+
+alert(historyData.join("\n"));
+
+}
+
+function mplus(){
+
+memory+=Number(display.value);
+
+}
+
+function mminus(){
+
+memory-=Number(display.value);
+
+}
+
+function mrecall(){
+
+display.value=memory;
+
+}
+
+</script>
+
+</body>
+
+</html>
